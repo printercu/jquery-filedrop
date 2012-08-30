@@ -144,7 +144,7 @@
         if (this.currentProgress !== percentage) {
 
           this.currentProgress = percentage;
-          opts.progressUpdated(this.index, this.file, this.currentProgress);
+          opts.progressUpdated.call(element, this.index, this.file, this.currentProgress);
 
           global_progress[this.global_progress_index] = this.currentProgress;
           globalProgress();
@@ -337,7 +337,7 @@
         global_progress[global_progress_index] = 0;
         globalProgress();
 
-        opts.uploadStarted(index, file, files_count);
+        opts.uploadStarted.call(element, index, file, files_count);
 
         xhr.onload = function() {
           if (xhr.responseText) {
@@ -352,7 +352,7 @@
 
             var now = new Date().getTime(),
                 timeDiff = now - start_time,
-                result = opts.uploadFinished(index, file, serverResponse, timeDiff, xhr);
+                result = opts.uploadFinished.call(element, index, file, serverResponse, timeDiff, xhr);
             filesDone++;
 
             // Remove from processing queue
@@ -407,7 +407,7 @@
     }
 
     function afterAll() {
-      return opts.afterAll();
+      return opts.afterAll.call(element);
     }
 
     function dragEnter(e) {
